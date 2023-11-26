@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MoviesAppCompose</string>
+    <string name="app_bar_name">Главная</string>
+    <string name="title_genre">Жанры</string>
 </resources>
