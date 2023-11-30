@@ -26,6 +26,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         viewModel.getMovies()
         setContent {
+
             MainScaffold(viewModel)
 //            MoviesAppComposeTheme {
 //                // A surface container using the 'background' color from the theme

@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.moviesappcompose.data.models.Film
 import com.example.moviesappcompose.domain.useCase.GetMovieListUseCase
 import com.example.moviesappcompose.utils.ResultOf
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +21,7 @@ class MainViewModel @Inject constructor(
 ): ViewModel() {
 
     val genres = mutableListOf<String>()
+    val movies = mutableListOf<Film>()
 
     fun getMovies() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -45,7 +47,7 @@ class MainViewModel @Inject constructor(
                     }
                     //Get list movies
                     launch(Dispatchers.IO) {
-                        result.value.films
+                        movies.addAll(result.value.films)
                     }
                 }
             }
