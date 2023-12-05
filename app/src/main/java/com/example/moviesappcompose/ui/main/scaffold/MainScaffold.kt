@@ -11,10 +11,10 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -22,17 +22,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.moviesappcompose.R
+import com.example.moviesappcompose.ui.main.DetailsTopBarState
+import com.example.moviesappcompose.ui.main.MainTopBarState
 import com.example.moviesappcompose.ui.main.MainViewModel
+import com.example.moviesappcompose.ui.main.StateScreen
 import com.example.moviesappcompose.ui.main.list.ItemFilm
 import com.example.moviesappcompose.ui.main.list.ItemGenre
 import com.example.moviesappcompose.ui.main.list.ItemTitle
+import com.example.moviesappcompose.ui.main.topBar.DetailsTopBar
+import com.example.moviesappcompose.ui.main.topBar.MainTopBar
 import com.example.moviesappcompose.ui.theme.Gray_title
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @LazyGridScopeMarker
 fun MainScaffold(viewModel: MainViewModel) {
     val buttonColor = remember { mutableStateOf("") }
+    val stateTopBar = MutableStateFlow<StateScreen>(MainTopBarState())
 
     Scaffold(
         topBar = {
@@ -42,7 +49,15 @@ fun MainScaffold(viewModel: MainViewModel) {
                     titleContentColor = Color.White,
                 ),
                 title = {
-                    Text(text = stringResource(R.string.app_bar_name))
+                    when (val state = stateTopBar.collectAsState().value) {
+                        is MainTopBarState -> MainTopBar()
+                        is DetailsTopBarState -> DetailsTopBar(
+                            name = state.name,
+                            onClick = {
+                                stateTopBar.value = MainTopBarState()
+                            }
+                        )
+                    }
                 }
             )
         }
@@ -97,11 +112,12 @@ fun MainScaffold(viewModel: MainViewModel) {
                     },
                     itemContent = { item ->
                         ItemFilm(
-                            film = item
+                            film = item,
+                            onClick = {film ->
+                                stateTopBar.value = DetailsTopBarState(film.localized_name)
+                            }
                         )
                     })
-
-
             })
     }
 }
