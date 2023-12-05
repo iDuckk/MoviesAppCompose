@@ -1,4 +1,4 @@
-package com.example.moviesappcompose.ui.main.list
+package com.example.moviesappcompose.ui.main.listScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

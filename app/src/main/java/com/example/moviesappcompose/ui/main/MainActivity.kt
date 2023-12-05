@@ -24,10 +24,13 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         viewModel.getMovies()
+
         setContent {
 
             MainScaffold(viewModel)
+
 //            MoviesAppComposeTheme {
 //                // A surface container using the 'background' color from the theme
 //                Surface(

@@ -1,4 +1,4 @@
-package com.example.moviesappcompose.ui.main.list
+package com.example.moviesappcompose.ui.main.listScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,12 +23,15 @@ import com.example.moviesappcompose.ui.theme.Dark_gray
 @Composable
 fun ItemGenre(
     genre: String,
-    buttonColor: MutableState<String>) {
+    buttonColor: MutableState<String>,
+    onClick: (String) -> Unit
+    ) {
     Box (
         modifier = Modifier
             .clickable(
                 onClick = {
                     buttonColor.value = genre
+                    onClick.invoke(genre)
                 })
     ) {
         Text(
