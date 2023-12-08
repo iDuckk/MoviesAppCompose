@@ -1,7 +1,7 @@
 plugins {
-    id("com.android.application")
-    kotlin("android")//id("org.jetbrains.kotlin.android")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.hilt)
     id("kotlin-kapt")
 }
 
@@ -42,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.6"
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
     packaging {
         resources {
@@ -53,6 +53,7 @@ android {
 
 dependencies {
 
+    implementation (projects.shared)
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.activity:activity-compose:1.8.1")
